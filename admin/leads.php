@@ -1,0 +1,3 @@
+<?php require_once __DIR__ . '/auth.php'; requireLogin(); require_once __DIR__ . '/_layout.php'; $leads = db()->query('SELECT * FROM leads ORDER BY created_at DESC LIMIT 200')->fetchAll(); adminHeader('Leads'); ?>
+<h2>Leads recebidos</h2><table class="table table-striped table-bordered"><tr><th>Nome</th><th>WhatsApp</th><th>Tipo</th><th>Mensagem</th><th>Data</th></tr><?php foreach($leads as $l): ?><tr><td><?= e($l['name']) ?></td><td><?= e($l['whatsapp']) ?></td><td><?= e($l['property_type']) ?></td><td><?= e($l['message']) ?></td><td><?= e($l['created_at']) ?></td></tr><?php endforeach; ?></table>
+<?php adminFooter();
