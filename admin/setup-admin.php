@@ -4,13 +4,19 @@ require_once __DIR__ . '/config.php';
 $totalAdmins = (int) db()->query('SELECT COUNT(*) FROM admins')->fetchColumn();
 $success = '';
 $error = '';
+$setupToken = getenv('ADMIN_SETUP_TOKEN') ?: '';
+$providedToken = trim($_GET['setup_token'] ?? $_POST['setup_token'] ?? '');
+$hasValidToken = $setupToken !== '' && hash_equals($setupToken, $providedToken);
 
 if ($totalAdmins > 0) {
     header('Location: login.php');
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (!$hasValidToken) {
+    http_response_code(403);
+    $error = 'Configuração inicial bloqueada. Defina ADMIN_SETUP_TOKEN no servidor e acesse com ?setup_token=SEU_TOKEN.';
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim(strip_tags($_POST['name'] ?? ''));
     $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
     $password = $_POST['password'] ?? '';
@@ -47,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php if ($error): ?><div class="alert alert-danger"><?= e($error) ?></div><?php endif; ?>
 <?php if ($success): ?><div class="alert alert-success"><?= e($success) ?></div><p><a class="btn btn-primary" href="login.php">Ir para login</a></p><?php else: ?>
 <form method="post">
+    <input type="hidden" name="setup_token" value="<?= e($providedToken) ?>">
     <div class="form-group"><label>Nome</label><input class="form-control" name="name" required></div>
     <div class="form-group"><label>E-mail</label><input class="form-control" type="email" name="email" required></div>
     <div class="form-group"><label>Senha</label><input class="form-control" type="password" name="password" minlength="8" required></div>
