@@ -6,6 +6,8 @@ $success = '';
 $error = '';
 $setupToken = getenv('ADMIN_SETUP_TOKEN') ?: '';
 $providedToken = trim($_GET['setup_token'] ?? $_POST['setup_token'] ?? '');
+$remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
+$isLocalInstaller = in_array($remoteAddr, ['127.0.0.1', '::1'], true);
 $hasValidToken = $setupToken !== '' && hash_equals($setupToken, $providedToken);
 
 if ($totalAdmins > 0) {
@@ -13,9 +15,9 @@ if ($totalAdmins > 0) {
     exit;
 }
 
-if (!$hasValidToken) {
+if (!$isLocalInstaller || !$hasValidToken) {
     http_response_code(403);
-    $error = 'Configuração inicial bloqueada. Defina ADMIN_SETUP_TOKEN no servidor e acesse com ?setup_token=SEU_TOKEN.';
+    $error = 'Configuração inicial bloqueada. Execute localmente (127.0.0.1/::1) e informe um setup_token válido.';
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim(strip_tags($_POST['name'] ?? ''));
     $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
