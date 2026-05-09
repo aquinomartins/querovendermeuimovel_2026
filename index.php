@@ -21,9 +21,14 @@ $ok='';$err='';
 if ($_SERVER['REQUEST_METHOD']==='POST') {
     $name=trim(strip_tags($_POST['name']??'')); $wa=trim(strip_tags($_POST['whatsapp']??'')); $pt=trim(strip_tags($_POST['property_type']??'')); $msg=trim(strip_tags($_POST['message']??''));
     if($name && $wa && $pt){
-        $stmt=db()->prepare('INSERT INTO leads (name, whatsapp, property_type, message) VALUES (:n,:w,:p,:m)');
-        $stmt->execute(['n'=>$name,'w'=>$wa,'p'=>$pt,'m'=>$msg]);
-        $ok=$defaults['form_success_message'];
+        $pdo = db();
+        if ($pdo) {
+            $stmt=$pdo->prepare('INSERT INTO leads (name, whatsapp, property_type, message) VALUES (:n,:w,:p,:m)');
+            $stmt->execute(['n'=>$name,'w'=>$wa,'p'=>$pt,'m'=>$msg]);
+            $ok=$defaults['form_success_message'];
+        } else {
+            $err='No momento não foi possível enviar. Tente novamente em instantes.';
+        }
     } else { $err='Preencha os campos obrigatórios.'; }
 }
 ?><!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="author" content="<?= e($defaults['seo_author']) ?>"><meta name="description" content="<?= e($defaults['seo_description']) ?>"><link href="assets/fonts/font-awesome-4.0.3/css/font-awesome.min.css" rel="stylesheet"><link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css"><link rel="stylesheet" href="assets/css/style.css"><title><?= e($defaults['seo_title']) ?></title></head><body data-spy="scroll" data-target=".navigation" data-offset="90"><section id="home"></section><div class="wrapper"><div class="navigation fixed"><div class="container"><header class="navbar"><div class="navbar-header"><button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><div class="navbar-brand nav" id="brand"><a href="index.php"><?= e($defaults['brand_name']) ?></a></div></div><nav class="collapse navbar-collapse bs-navbar-collapse navbar-right"><ul class="nav navbar-nav"><?php foreach($menu as $m): ?><li><a href="<?= e($m['link']??'#') ?>"><?= e($m['text']??'Link') ?></a></li><?php endforeach; ?></ul></nav></header></div></div>
