@@ -1,0 +1,37 @@
+{
+  "seo": {
+    "title": "Quero Vender Meu Imóvel",
+    "description": "Venda seu imóvel com segurança e pelo melhor valor de mercado.",
+    "author": "Quero Vender Meu Imóvel"
+  },
+  "header": {
+    "brand": "Quero vender meu imóvel",
+    "menu": [
+      {"label": "Início", "url": "#home"},
+      {"label": "Como funciona", "url": "#features"},
+      {"label": "Contato", "url": "#footer"}
+    ]
+  },
+  "hero": {
+    "title": "Venda seu imóvel",
+    "subtitle": "com segurança e pelo melhor valor de mercado",
+    "form_title": "Receba uma avaliação",
+    "form_highlight": "gratuita",
+    "button_text": "QUERO SABER O VALOR DO MEU IMÓVEL",
+    "slides": ["assets/img/slide001.png", "assets/img/slide002.png", "assets/img/slide003.png"]
+  },
+  "features": {
+    "title": "Está difícil vender seu imóvel?",
+    "media_type": "video",
+    "video_path": "uploads/videos/apresentacao.mp4",
+    "video_poster": "assets/img/features-slide-01.jpg",
+    "image_path": "assets/img/features-slide-01.jpg",
+    "cards": [
+      {"icon": "assets/img/icon-01.png", "title": "1. Envie seus dados", "description": "Envie as principais informações do seu imóvel."},
+      {"icon": "assets/img/icon-02.png", "title": "2. Avaliamos seu imóvel", "description": "Fazemos uma avaliação ágil e estratégica."},
+      {"icon": "assets/img/icon-03.png", "title": "3. Definimos a estratégia", "description": "Criamos um plano para vender melhor."}
+    ]
+  },
+  "contact": {"whatsapp": "", "email": "", "phone": "", "address": ""},
+  "footer": {"copyright": "(C) QueroVenderMeuImóvel.com"}
+}

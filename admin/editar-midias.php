@@ -1,0 +1,6 @@
+<?php require_once __DIR__ . '/auth.php'; $res=null; if($_SERVER['REQUEST_METHOD']==='POST'){ $type=$_POST['type']==='video'?'video':'image'; $res=upload_file($_FILES['arquivo']??[],$type);} ?>
+<!doctype html><html><head><meta charset='utf-8'><link rel='stylesheet' href='../assets/bootstrap/css/bootstrap.min.css'><title>Mídias</title></head><body class='container'><h3>Upload de Mídias</h3><a href='dashboard.php'>← Dashboard</a>
+<?php if($res):?><div class='alert alert-<?=$res['ok']?'success':'danger'?>'><?=e($res['message'])?> <?php if(!empty($res['path'])):?><br><code><?=e($res['path'])?></code><?php endif;?></div><?php endif;?>
+<form method='post' enctype='multipart/form-data'><select class='form-control' name='type'><option value='image'>Imagem (jpg,jpeg,png,webp até 5MB)</option><option value='video'>Vídeo mp4 até 80MB</option></select><br><input type='file' name='arquivo' required><br><br><button class='btn btn-primary'>Enviar arquivo</button></form>
+<?php if(!empty($res['ok']) && !empty($res['path'])): if(str_starts_with($res['path'],'uploads/images')):?><img src='../<?=e($res['path'])?>' style='max-width:320px'><?php else:?><video controls style='max-width:420px'><source src='../<?=e($res['path'])?>' type='video/mp4'></video><?php endif; endif;?>
+</body></html>
