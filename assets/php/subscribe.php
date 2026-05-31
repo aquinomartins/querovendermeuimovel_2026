@@ -2,6 +2,7 @@
 $name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
+$neighborhood = $_POST['neighborhood'];
 
 $to = 'hithemestarz@gmail.com';
 $subject = 'You Have new subscriber!';
@@ -19,6 +20,10 @@ $body .= "\n\n";
 $body .= "";
 $body .= "Phone no.: ";
 $body .= $phone;
+$body .= "\n\n";
+
+$body .= "Bairro do Imóvel: ";
+$body .= $neighborhood;
 $body .= "\n";
 
 $headers = 'From: ' .$email . "\r\n";

@@ -1494,6 +1494,15 @@ h1, h2, h3, h4 {
   color: #fff;
 }
 
+.form-slider-wrapper select.form-control {
+  height: 48px;
+}
+
+.form-slider-wrapper select.form-control option {
+  background: #111827;
+  color: #fff;
+}
+
 .form-slider-wrapper .form-control:focus {
   border-color: var(--brand-primary);
   background: rgba(255, 255, 255, 0.12);
